@@ -5,16 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sarah Melki — Avocate en Droit Immobilier Paris</title>
     
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,600;0,800;1,600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,500;0,700;1,500&display=swap" rel="stylesheet">
     
     <style>
         /* ================= VARIABLES ================= */
         :root {
-            --bg-pierre: #F7F6F2; /* Blanc cassé façon pierre de taille */
-            --bg-ardoise: #1A1C20; /* Gris/Bleu très sombre (toits de Paris) */
-            --text-dark: #2C303A;
-            --text-light: #F7F6F2;
-            --accent-bronze: #C5A059; /* Touche de prestige */
+            --bg-pierre: #f9f8f6; /* Blanc cassé très élégant */
+            --bg-ardoise: #121418; /* Noir/Bleu très profond */
+            --text-dark: #1d1d1f;
+            --text-light: #f5f5f7;
+            --accent-or: #C5A059; /* Bronze/Or */
+            --accent-bleu: #1A365D; /* Bleu juridique */
             --transition: 0.4s cubic-bezier(0.25, 1, 0.5, 1);
         }
 
@@ -28,151 +29,171 @@
             overflow-x: hidden;
         }
 
-        h1, h2, h3, .logo {
-            font-family: 'Playfair Display', serif;
-        }
-
+        h1, h2, h3, .logo { font-family: 'Playfair Display', serif; }
         a { text-decoration: none; color: inherit; }
 
         /* ================= ANIMATIONS ================= */
         .reveal {
-            opacity: 0;
-            transform: translateY(30px);
+            opacity: 0; transform: translateY(40px);
             transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
         }
         .reveal.active { opacity: 1; transform: translateY(0); }
 
-        /* ================= HEADER GLASS ================= */
+        /* Mouvement des orbes (Liquide) */
+        @keyframes floatLiquid {
+            0% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(40px, -40px) scale(1.1); }
+            66% { transform: translate(-20px, 20px) scale(0.9); }
+            100% { transform: translate(0, 0) scale(1); }
+        }
+
+        /* ================= HEADER (GLASS V1) ================= */
         header {
             position: fixed; top: 0; width: 100%; display: flex; justify-content: space-between; align-items: center;
             padding: 1.2rem 4rem; z-index: 1000;
-            background: rgba(247, 246, 242, 0.7);
-            backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
-            border-bottom: 1px solid rgba(197, 160, 89, 0.2);
+            background: rgba(249, 248, 246, 0.7);
+            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(197, 160, 89, 0.15);
         }
 
-        .logo { font-weight: 800; font-size: 1.3rem; letter-spacing: 0.5px; color: var(--bg-ardoise); }
-        .logo span { color: var(--accent-bronze); font-style: italic; }
+        .logo { font-weight: 700; font-size: 1.3rem; letter-spacing: 0.5px; color: var(--text-dark); }
+        .logo span { color: var(--accent-or); font-style: italic; }
 
-        .nav-links a { margin: 0 1.5rem; font-size: 0.85rem; font-weight: 500; color: #555; text-transform: uppercase; letter-spacing: 1px; }
-        .nav-links a:hover { color: var(--accent-bronze); }
+        .nav-links a { margin: 0 1.5rem; font-size: 0.85rem; font-weight: 500; color: #555; text-transform: uppercase; letter-spacing: 1px; transition: color 0.3s; }
+        .nav-links a:hover { color: var(--accent-or); }
         
         .btn-primary {
-            background-color: var(--bg-ardoise); color: white; padding: 0.8rem 1.8rem; border-radius: 2px;
+            background-color: var(--text-dark); color: white; padding: 0.75rem 1.8rem; border-radius: 30px;
             font-size: 0.85rem; font-weight: 500; text-transform: uppercase; letter-spacing: 1px;
-            transition: background-color 0.3s; font-family: 'Inter', sans-serif;
+            transition: transform var(--transition), background-color 0.3s; font-family: 'Inter', sans-serif;
         }
-        .btn-primary:hover { background-color: var(--accent-bronze); }
+        .btn-primary:hover { transform: scale(1.04); background-color: var(--accent-or); }
 
-        /* ================= HERO (ARCHITECTURE BG) ================= */
+        /* ================= HERO (MIXTE) ================= */
         .hero {
             min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;
-            padding: 8rem 2rem 4rem; position: relative;
-            /* Superbe image de Paris en fond */
+            padding: 8rem 2rem 4rem; position: relative; overflow: hidden;
+            /* Architecture subtile en fond */
             background: url('https://images.unsplash.com/photo-1499856871958-5b9627545d1a?q=80&w=2020&auto=format&fit=crop') center/cover no-repeat;
         }
         
-        /* Calque blanc semi-transparent pour garder le texte lisible */
+        /* Filtre de verre très clair pour le Hero */
         .hero::before {
             content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(247, 246, 242, 0.85);
-            backdrop-filter: blur(5px);
+            background: rgba(249, 248, 246, 0.85); /* Blanc cassé transparent */
+            backdrop-filter: blur(8px); z-index: 1;
+        }
+
+        /* Orbe subtil dans le Hero */
+        .orb-hero {
+            position: absolute; width: 500px; height: 500px; background: var(--accent-or); border-radius: 50%;
+            filter: blur(100px); opacity: 0.15; z-index: 1; top: -10%; right: -10%; animation: floatLiquid 12s infinite alternate ease-in-out;
         }
 
         .hero-content { position: relative; z-index: 2; max-width: 800px; }
 
-        .hero h1 {
-            font-size: clamp(3.5rem, 6vw, 5.5rem); font-weight: 800; line-height: 1.1; margin-bottom: 1.5rem; color: var(--bg-ardoise);
-        }
-        .hero h1 i { color: var(--accent-bronze); font-weight: 600; }
-        
-        .hero p {
-            font-size: 1.2rem; color: #555; font-weight: 400; margin-bottom: 3rem; font-family: 'Inter', sans-serif;
-        }
+        .hero h1 { font-size: clamp(3.5rem, 6vw, 5.5rem); font-weight: 700; line-height: 1.1; margin-bottom: 1.5rem; color: var(--text-dark); }
+        .hero h1 i { color: var(--accent-or); font-weight: 500; }
+        .hero p { font-size: 1.2rem; color: #555; font-weight: 300; margin-bottom: 3rem; font-family: 'Inter', sans-serif; }
 
-        /* ================= EXPERTISES : LE CARROUSEL ================= */
+        /* ================= EXPERTISES (CARROUSEL + GLASS LIQUID + ARCHITECTURE) ================= */
         .expertises {
-            background-color: var(--bg-ardoise); padding: 6rem 0 8rem; position: relative; overflow: hidden;
-            /* Image de charpente/architecture sombre en fond */
+            background-color: var(--bg-ardoise); padding: 8rem 0; position: relative; overflow: hidden;
+            /* Texture d'architecture très sombre (plans/poutres) */
             background-image: url('https://images.unsplash.com/photo-1502602898657-3e907fa3a289?q=80&w=2072&auto=format&fit=crop');
-            background-size: cover; background-position: center; background-attachment: fixed;
-        }
-        .expertises::before {
-            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(26, 28, 32, 0.85); /* Assombrit fortement l'image */
+            background-size: cover; background-position: center; background-attachment: fixed; background-blend-mode: overlay;
         }
 
-        .section-title {
-            position: relative; z-index: 2; font-size: 3rem; color: var(--text-light); text-align: center; margin-bottom: 1rem;
-        }
-        .section-subtitle {
-            position: relative; z-index: 2; text-align: center; color: #aaa; margin-bottom: 4rem; font-family: 'Inter'; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 2px;
-        }
+        /* Orbes liquides d'arrière-plan (Couleurs Prestige) */
+        .liquid-orb { position: absolute; border-radius: 50%; filter: blur(90px); opacity: 0.5; z-index: 1; animation: floatLiquid 15s infinite alternate ease-in-out; }
+        .orb-1 { width: 450px; height: 450px; background: var(--accent-bleu); top: -10%; left: -5%; }
+        .orb-2 { width: 550px; height: 550px; background: var(--accent-or); bottom: -20%; right: -10%; opacity: 0.25; animation-delay: -5s; }
 
-        /* Le conteneur du carrousel */
+        .section-title { position: relative; z-index: 2; font-size: clamp(2.5rem, 4vw, 3.5rem); color: var(--text-light); text-align: center; margin-bottom: 1rem; }
+        .section-subtitle { position: relative; z-index: 2; text-align: center; color: rgba(255,255,255,0.5); margin-bottom: 4rem; font-family: 'Inter'; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; }
+
+        /* Carrousel */
         .carousel-container {
-            position: relative; z-index: 2; width: 100%; padding: 0 4rem;
+            position: relative; z-index: 2; width: 100%; padding: 0 4rem; padding-bottom: 2rem;
             display: flex; gap: 2rem; overflow-x: auto; scroll-snap-type: x mandatory;
-            scrollbar-width: none; /* Cache la scrollbar sur Firefox */
-            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none; -webkit-overflow-scrolling: touch;
         }
-        .carousel-container::-webkit-scrollbar { display: none; } /* Cache la scrollbar sur Chrome/Safari */
+        .carousel-container::-webkit-scrollbar { display: none; }
 
+        /* Cartes en Verre (V1) */
         .card {
-            flex: 0 0 350px; /* Largeur fixe pour les cartes du carrousel */
-            scroll-snap-align: center;
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
-            padding: 3rem 2rem; border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 4px;
-            border-top: 3px solid var(--accent-bronze);
-            transition: transform 0.3s, background 0.3s;
+            flex: 0 0 340px; scroll-snap-align: center;
+            background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+            padding: 3rem 2rem; border-radius: 20px; border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            transition: transform var(--transition), border-color 0.3s, background 0.3s;
         }
-        .card:hover { background: rgba(255, 255, 255, 0.1); transform: translateY(-5px); }
-        
-        .card h3 { font-size: 1.5rem; margin-bottom: 1rem; color: var(--text-light); }
-        .card p { color: #ccc; font-size: 0.95rem; font-weight: 300; }
+        .card:hover { transform: translateY(-8px); border-color: rgba(197, 160, 89, 0.5); background: rgba(255, 255, 255, 0.08); }
+        .card h3 { font-family: 'Playfair Display'; font-size: 1.5rem; margin-bottom: 1rem; color: var(--text-light); }
+        .card p { color: #d1d1d6; font-size: 0.95rem; font-weight: 300; line-height: 1.7; }
 
-        /* ================= À PROPOS (LE CABINET) ================= */
-        .about { padding: 8rem 4rem; max-width: 1200px; margin: 0 auto; display: flex; align-items: center; gap: 4rem; }
+        /* ================= À PROPOS ================= */
+        .about { padding: 8rem 4rem; max-width: 1200px; margin: 0 auto; display: flex; align-items: center; gap: 5rem; }
         .about-text { flex: 1; }
-        .about-image { flex: 1; height: 600px; position: relative; }
-        .about-image img { width: 100%; height: 100%; object-fit: cover; border-radius: 4px; }
+        .about-image { flex: 1; height: 540px; border-radius: 20px; overflow: hidden; position: relative; }
+        .about-image img { width: 100%; height: 100%; object-fit: cover; }
         
-        /* Cadre décoratif type "plan d'architecte" */
-        .about-image::after {
-            content: ''; position: absolute; top: -20px; right: -20px; bottom: 20px; left: 20px;
-            border: 1px solid var(--accent-bronze); z-index: -1;
-        }
-
-        .about h2 { font-size: 3rem; margin-bottom: 1.5rem; color: var(--bg-ardoise); }
-        .about p { font-size: 1.05rem; color: #555; margin-bottom: 1.5rem; }
+        .about h2 { font-size: clamp(2rem, 3.5vw, 2.8rem); margin-bottom: 1.5rem; color: var(--text-dark); line-height: 1.15; }
+        .about p { font-size: 1.05rem; color: #555; margin-bottom: 1.2rem; font-weight: 300; line-height: 1.75; }
         
-        .about-list { margin-top: 2rem; list-style: none; border-top: 1px solid #ddd; padding-top: 2rem; }
-        .about-list li { font-size: 1rem; color: #333; margin-bottom: 1rem; display: flex; align-items: center; gap: 10px; }
-        .about-list li::before { content: '■'; color: var(--accent-bronze); font-size: 0.8rem; }
+        .about-list { margin-top: 2rem; list-style: none; display: flex; flex-direction: column; gap: 0.75rem; }
+        .about-list li { font-size: 0.95rem; color: #444; display: flex; align-items: flex-start; gap: 0.6rem; }
+        .check { color: var(--accent-or); font-weight: 700; flex-shrink: 0; }
 
-        /* ================= CONTACT ================= */
-        .contact-section { padding: 8rem 4rem; background: #EBEAE5; border-top: 1px solid #ddd; }
-        .contact-inner { display: flex; gap: 4rem; max-width: 1200px; margin: 0 auto; }
+        /* ================= CONTACT (FORMULAIRE TECH V1 + COULEURS V2) ================= */
+        .contact-section { background: #EBEAE5; padding: 8rem 4rem; border-top: 1px solid rgba(0,0,0,0.05); }
+        .contact-inner { display: flex; gap: 5rem; max-width: 1200px; margin: 0 auto; width: 100%; align-items: flex-start; }
         .contact-left { flex: 1; }
-        .contact-left h2 { font-size: 3rem; margin-bottom: 1rem; }
-        .contact-right { flex: 1; background: white; padding: 3rem; border-radius: 4px; box-shadow: 0 10px 40px rgba(0,0,0,0.05); }
+        .contact-left h2 { font-size: clamp(2.5rem, 3.5vw, 3rem); margin-bottom: 1.2rem; }
+        .contact-left p { font-size: 1.05rem; color: #555; font-weight: 300; line-height: 1.7; margin-bottom: 2.5rem; }
+        
+        .contact-info-list { list-style: none; }
+        .contact-info-list li { display: flex; align-items: center; gap: 1rem; padding: 1rem 0; border-bottom: 1px solid rgba(0,0,0,0.1); font-size: 0.9rem; }
+        .contact-info-list li:first-child { border-top: 1px solid rgba(0,0,0,0.1); }
+        .ci-label { font-size: 0.65rem; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: #888; min-width: 72px; }
 
-        .form-group { margin-bottom: 1.5rem; }
-        .form-group label { display: block; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; color: #888; margin-bottom: 0.5rem; }
-        .form-group input, .form-group select, .form-group textarea {
-            width: 100%; padding: 12px; border: 1px solid #ddd; font-family: 'Inter'; font-size: 1rem; background: #FAFAFA;
+        .contact-right { flex: 1.2; }
+
+        /* Formulaire ultra-lisse */
+        .form { background: white; border-radius: 20px; overflow: hidden; box-shadow: 0 10px 40px rgba(0,0,0,0.05); }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; }
+        .form-cell { display: flex; flex-direction: column; border-bottom: 1px solid #f0f0f0; border-right: 1px solid #f0f0f0; transition: background 0.2s; }
+        .form-cell:focus-within { background: #fafafa; }
+        .form-cell.full { grid-column: 1 / -1; border-right: none; }
+        .form-row .form-cell:nth-child(2) { border-right: none; }
+        .form-cell label { font-size: 0.62rem; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: #aaa; padding: 14px 18px 0; }
+        .form-cell input, .form-cell textarea, .form-cell select {
+            background: transparent; border: none; outline: none; padding: 6px 18px 16px;
+            font-family: 'Inter', sans-serif; font-size: 0.95rem; color: var(--text-dark); width: 100%;
         }
-        .form-group textarea { height: 120px; resize: none; }
-        .submit-btn { width: 100%; padding: 15px; background: var(--bg-ardoise); color: white; border: none; font-size: 1rem; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; transition: 0.3s; }
-        .submit-btn:hover { background: var(--accent-bronze); }
+        .form-cell input::placeholder, .form-cell textarea::placeholder { color: #ddd; }
+        .form-cell textarea { height: 110px; resize: none; }
+        .form-cell select { cursor: pointer; }
+
+        .form-submit {
+            width: 100%; padding: 18px 24px; background: var(--bg-ardoise); border: none; cursor: pointer;
+            display: flex; align-items: center; justify-content: space-between; transition: background 0.3s;
+        }
+        .form-submit:hover { background: var(--accent-or); }
+        .form-submit span { font-family: 'Inter', sans-serif; font-size: 0.9rem; font-weight: 600; color: white; text-transform: uppercase; letter-spacing: 1px;}
+        .submit-arrow {
+            width: 30px; height: 30px; border-radius: 50%; border: 1.5px solid rgba(255,255,255,0.25);
+            display: flex; align-items: center; justify-content: center; color: white; font-size: 14px; transition: transform 0.2s;
+        }
+        .form-submit:hover .submit-arrow { transform: translateX(4px); }
 
         /* Responsive */
         @media (max-width: 900px) {
-            header { padding: 1rem; } .nav-links { display: none; }
-            .carousel-container { padding: 0 1rem; } .card { flex: 0 0 280px; }
-            .about, .contact-inner { flex-direction: column; padding: 4rem 1.5rem; gap: 3rem; }
-            .contact-section { padding: 4rem 1.5rem; }
+            header { padding: 1rem 1.5rem; } .nav-links { display: none; }
+            .carousel-container { padding: 0 1.5rem; } .card { flex: 0 0 280px; }
+            .about { flex-direction: column; padding: 6rem 1.5rem; gap: 3rem; } .about-image { width: 100%; height: 400px; flex: none; }
+            .contact-section { padding: 6rem 1.5rem; } .contact-inner { flex-direction: column; gap: 3rem; }
+            .form-row { grid-template-columns: 1fr; } .form-cell { border-right: none !important; }
         }
     </style>
 </head>
@@ -188,17 +209,21 @@
         <a href="#contact" class="btn-primary">Prendre rendez-vous</a>
     </header>
 
-    <section class="hero">
-        <div class="hero-content reveal">
+    <section class="hero reveal">
+        <div class="orb-hero"></div>
+        <div class="hero-content">
             <h1>L'immobilier, <br><i>sécurisé.</i></h1>
-            <p>Droit de la construction, baux commerciaux et copropriété.<br>Un accompagnement juridique sur-mesure pour protéger votre patrimoine.</p>
+            <p>Droit de la construction, baux commerciaux et copropriété.<br>Un accompagnement juridique sur-mesure pour protéger vos actifs.</p>
             <a href="#contact" class="btn-primary" style="padding: 1rem 2.5rem; font-size: 1rem;">Analyser mon dossier</a>
         </div>
     </section>
 
     <section id="expertises" class="expertises">
+        <div class="liquid-orb orb-1"></div>
+        <div class="liquid-orb orb-2"></div>
+
         <h2 class="section-title reveal">Domaines d'intervention</h2>
-        <div class="section-subtitle reveal">← Faites glisser pour découvrir nos expertises →</div>
+        <div class="section-subtitle reveal">← Faites glisser pour découvrir →</div>
         
         <div class="carousel-container reveal" style="transition-delay: 0.2s;">
             <div class="card">
@@ -227,16 +252,16 @@
     <section id="cabinet" class="about">
         <div class="about-text reveal">
             <h2>Rigueur juridique.<br>Pragmatisme stratégique.</h2>
-            <p>Inscrite au Barreau de Paris, Maître Sarah Melki consacre son activité à la défense des acteurs de l'immobilier : investisseurs, marchands de biens, entreprises et particuliers.</p>
-            <p>Parce que les enjeux immobiliers ne supportent pas l'à-peu-près, le cabinet s'engage sur une méthode stricte : clarté des conseils, transparence des coûts et réactivité absolue.</p>
+            <p>Inscrite au Barreau de Paris, j'accompagne les investisseurs, les entreprises et les particuliers avec une méthode claire : réactivité, transparence stratégique et efficacité.</p>
+            <p>La complexité juridique ne doit jamais être un frein à vos ambitions immobilières, mais un levier de sécurité indispensable.</p>
             <ul class="about-list">
-                <li>Réponses systématiques en moins de 24 heures.</li>
-                <li>Convention d'honoraires transparente dès le premier rendez-vous.</li>
-                <li>Plaidoyer devant toutes les juridictions civiles et commerciales de France.</li>
+                <li><span class="check">■</span><span><strong>Réactivité absolue</strong> : Réponses en moins de 24h.</span></li>
+                <li><span class="check">■</span><span><strong>Stratégie sur-mesure</strong> : Chaque dossier est unique.</span></li>
+                <li><span class="check">■</span><span><strong>Transparence</strong> : Honoraires clairs et prévisibles.</span></li>
             </ul>
         </div>
         <div class="about-image reveal" style="transition-delay: 0.2s;">
-            <img src="https://images.unsplash.com/photo-1600607686527-6fb886090705?q=80&w=2000&auto=format&fit=crop" alt="Intérieur Cabinet">
+            <img src="https://images.unsplash.com/photo-1600607686527-6fb886090705?q=80&w=2000&auto=format&fit=crop" alt="Intérieur Cabinet Sarah Melki">
         </div>
     </section>
 
@@ -244,34 +269,45 @@
         <div class="contact-inner">
             <div class="contact-left reveal">
                 <h2>Confiez-nous<br>votre dossier.</h2>
-                <p style="margin-bottom: 2rem; color: #666;">Exposez brièvement votre problématique immobilière. Le cabinet vous recontactera rapidement pour évaluer les suites juridiques à donner.</p>
-                <p><strong>📍 Cabinet</strong><br>Paris — Barreau de Paris</p>
-                <p style="margin-top:1rem;"><strong>✉️ Email</strong><br>contact@sarahmelki-avocate.fr</p>
+                <p>Exposez brièvement votre problématique immobilière. Le cabinet vous recontactera rapidement pour évaluer les suites juridiques à donner.</p>
+                <ul class="contact-info-list">
+                    <li><span class="ci-label">Cabinet</span><span class="ci-value">Paris — Barreau de Paris</span></li>
+                    <li><span class="ci-label">Tél.</span><span class="ci-value">+33 (0)1 XX XX XX XX</span></li>
+                    <li><span class="ci-label">Email</span><span class="ci-value">contact@sarahmelki-avocate.fr</span></li>
+                </ul>
             </div>
-            <div class="contact-right reveal" style="transition-delay: 0.2s;">
-                <div class="form-group">
-                    <label>Nom & Prénom</label>
-                    <input type="text" placeholder="Jean Dupont">
+            <div class="contact-right reveal" style="transition-delay: 0.15s;">
+                <div class="form">
+                    <div class="form-row">
+                        <div class="form-cell"><label>Prénom</label><input type="text" placeholder="Jean"></div>
+                        <div class="form-cell"><label>Nom</label><input type="text" placeholder="Dupont"></div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-cell"><label>Email</label><input type="email" placeholder="jean@exemple.fr"></div>
+                        <div class="form-cell"><label>Téléphone</label><input type="tel" placeholder="+33 6 XX XX XX XX"></div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-cell full"><label>Domaine</label>
+                            <select>
+                                <option value="" disabled selected>Votre problématique...</option>
+                                <option>Bail Commercial</option>
+                                <option>Droit de la Construction</option>
+                                <option>Copropriété</option>
+                                <option>Vente Immobilière</option>
+                                <option>Autre</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-cell full"><label>Message</label>
+                            <textarea placeholder="Décrivez votre situation..."></textarea>
+                        </div>
+                    </div>
+                    <button class="form-submit" onclick="this.querySelector('span').textContent='Message envoyé'; this.style.background='#1a7a3c';">
+                        <span>Envoyer la demande</span>
+                        <div class="submit-arrow">→</div>
+                    </button>
                 </div>
-                <div class="form-group">
-                    <label>Téléphone</label>
-                    <input type="tel" placeholder="06 XX XX XX XX">
-                </div>
-                <div class="form-group">
-                    <label>Objet du litige / Projet</label>
-                    <select>
-                        <option>Bail Commercial</option>
-                        <option>Droit de la Construction</option>
-                        <option>Copropriété</option>
-                        <option>Vente Immobilière</option>
-                        <option>Autre</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>Votre message</label>
-                    <textarea placeholder="Décrivez votre situation..."></textarea>
-                </div>
-                <button class="submit-btn" onclick="this.textContent='✓ Demande envoyée'; this.style.background='#1a7a3c';">Envoyer la demande</button>
             </div>
         </div>
     </section>
@@ -285,7 +321,7 @@
             }, { threshold: 0.15 });
 
             document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-            setTimeout(() => document.querySelector('.hero-content').classList.add('active'), 100);
+            setTimeout(() => document.querySelector('.hero').classList.add('active'), 100);
         });
     </script>
 </body>
