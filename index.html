@@ -13,15 +13,11 @@
             --text-dark: #1d1d1f;
             --bg-dark: #000000;
             --text-light: #f5f5f7;
-            --accent: #06c; /* Bleu subtil façon Apple */
+            --accent: #06c;
             --transition: 0.4s cubic-bezier(0.25, 1, 0.5, 1);
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
@@ -31,12 +27,9 @@
             overflow-x: hidden;
         }
 
-        a {
-            text-decoration: none;
-            color: inherit;
-        }
+        a { text-decoration: none; color: inherit; }
 
-        /* ================= ANIMATIONS (WEBFLOW STYLE) ================= */
+        /* ================= ANIMATIONS ================= */
         .reveal {
             opacity: 0;
             transform: translateY(40px);
@@ -47,7 +40,15 @@
             transform: translateY(0);
         }
 
-        /* ================= HEADER / NAVBAR ================= */
+        /* Animations des orbes liquides */
+        @keyframes floatLiquid {
+            0% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(30px, -50px) scale(1.1); }
+            66% { transform: translate(-20px, 20px) scale(0.9); }
+            100% { transform: translate(0, 0) scale(1); }
+        }
+
+        /* ================= HEADER ================= */
         header {
             position: fixed;
             top: 0;
@@ -56,191 +57,267 @@
             justify-content: space-between;
             align-items: center;
             padding: 1.5rem 4rem;
-            background: rgba(251, 251, 253, 0.8);
-            backdrop-filter: blur(10px); /* Effet verre dépoli */
+            /* Header en verre */
+            background: rgba(251, 251, 253, 0.7);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             z-index: 1000;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
         }
 
-        .logo {
-            font-weight: 800;
-            letter-spacing: -0.5px;
-            font-size: 1.2rem;
-        }
-
-        .nav-links a {
-            margin: 0 1.5rem;
-            font-size: 0.9rem;
-            font-weight: 400;
-            color: #555;
-            transition: color 0.3s;
-        }
-
+        .logo { font-weight: 800; letter-spacing: -0.5px; font-size: 1.1rem; }
+        .nav-links a { margin: 0 1.5rem; font-size: 0.85rem; font-weight: 400; color: #555; transition: color 0.3s; }
         .nav-links a:hover { color: var(--text-dark); }
-
+        
         .btn-primary {
             background-color: var(--text-dark);
             color: white;
-            padding: 0.8rem 1.5rem;
+            padding: 0.75rem 1.5rem;
             border-radius: 30px;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             font-weight: 600;
-            transition: transform var(--transition), background-color 0.3s;
+            transition: transform var(--transition), background-color 0.3s, box-shadow 0.3s;
+            display: inline-block;
         }
-
         .btn-primary:hover {
-            transform: scale(1.05);
+            transform: scale(1.04);
             background-color: #333;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.15);
         }
 
-        /* ================= HERO SECTION ================= */
+        /* ================= HERO ================= */
         .hero {
-            height: 100vh;
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             text-align: center;
-            padding: 0 2rem;
-            max-width: 900px;
+            padding: 8rem 2rem 4rem;
+            max-width: 860px;
             margin: 0 auto;
+            position: relative;
         }
 
         .hero h1 {
-            font-size: 5.5rem;
+            font-size: clamp(3.5rem, 8vw, 6rem);
             font-weight: 800;
             letter-spacing: -2px;
-            line-height: 1.1;
+            line-height: 1.05;
             margin-bottom: 1.5rem;
+            position: relative;
+            z-index: 2;
         }
 
         .hero p {
-            font-size: 1.5rem;
+            font-size: clamp(1.1rem, 2vw, 1.4rem);
             color: #6e6e73;
             font-weight: 300;
+            max-width: 600px;
             margin-bottom: 3rem;
+            line-height: 1.6;
+            position: relative;
+            z-index: 2;
         }
 
-        /* ================= EXPERTISES (DARK SECTION) ================= */
+        /* ================= CAROUSEL DÉFILANT ================= */
+        .carousel-section {
+            padding: 2.5rem 0;
+            overflow: hidden;
+            border-top: 1px solid #e5e5ea;
+            border-bottom: 1px solid #e5e5ea;
+            background: var(--bg-light);
+            position: relative;
+        }
+        .carousel-section::before, .carousel-section::after {
+            content: ''; position: absolute; top: 0; bottom: 0; width: 120px; z-index: 2; pointer-events: none;
+        }
+        .carousel-section::before { left: 0; background: linear-gradient(to right, var(--bg-light), transparent); }
+        .carousel-section::after  { right: 0; background: linear-gradient(to left,  var(--bg-light), transparent); }
+
+        .carousel-track { display: flex; width: max-content; animation: scroll-track 32s linear infinite; }
+        .carousel-track:hover { animation-play-state: paused; }
+        @keyframes scroll-track { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+        .carousel-item {
+            display: flex; align-items: center; gap: 1rem; padding: 0 2.5rem; white-space: nowrap;
+            font-size: 0.8rem; font-weight: 500; letter-spacing: 1.5px; text-transform: uppercase; color: #aaa;
+        }
+        .carousel-dot { width: 4px; height: 4px; border-radius: 50%; background: #1d1d1f; flex-shrink: 0; }
+
+        /* ================= EXPERTISES (DARK GLASS LIQUID) ================= */
         .expertises {
             background-color: var(--bg-dark);
             color: var(--text-light);
             padding: 8rem 4rem;
+            position: relative;
+            overflow: hidden; /* Important pour cacher les orbes qui débordent */
         }
 
+        /* Orbes liquides d'arrière-plan */
+        .liquid-orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px); /* Le flou qui crée l'effet liquide/lumière */
+            opacity: 0.6;
+            z-index: 0;
+            animation: floatLiquid 15s infinite alternate ease-in-out;
+        }
+        .orb-1 { width: 400px; height: 400px; background: #06c; top: -10%; left: -5%; }
+        .orb-2 { width: 500px; height: 500px; background: #4a00e0; bottom: -20%; right: -10%; animation-delay: -5s; }
+        .orb-3 { width: 300px; height: 300px; background: #00b4db; top: 40%; left: 40%; opacity: 0.3; animation-delay: -10s; }
+
         .section-title {
-            font-size: 3rem;
+            position: relative;
+            z-index: 2;
+            font-size: clamp(2rem, 4vw, 3rem);
             font-weight: 800;
             letter-spacing: -1px;
             margin-bottom: 4rem;
             text-align: center;
+            line-height: 1.2;
         }
 
         .grid-expertises {
+            position: relative;
+            z-index: 2; /* Place les cartes au-dessus des orbes */
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2rem;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 1.5rem;
             max-width: 1200px;
             margin: 0 auto;
         }
 
+        /* Effet Glassmorphism sur les cartes */
         .card {
-            background: #111;
-            padding: 3rem 2rem;
+            background: rgba(255, 255, 255, 0.03); /* Presque transparent */
+            backdrop-filter: blur(20px); /* Floute l'arrière-plan */
+            -webkit-backdrop-filter: blur(20px);
+            padding: 2.5rem 2rem;
             border-radius: 20px;
-            border: 1px solid #333;
-            transition: transform var(--transition), border-color 0.3s;
+            border: 1px solid rgba(255, 255, 255, 0.1); /* Bordure légère */
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            transition: transform var(--transition), border-color 0.3s, background 0.3s;
         }
-
         .card:hover {
-            transform: translateY(-10px);
-            border-color: #555;
+            transform: translateY(-8px);
+            border-color: rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.08);
         }
+        .card h3 { font-size: 1.25rem; margin-bottom: 0.8rem; font-weight: 600; }
+        .card p { color: #d1d1d6; font-size: 0.95rem; line-height: 1.7; font-weight: 300; }
 
-        .card h3 {
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-            font-weight: 600;
-        }
-
-        .card p {
-            color: #a1a1a6;
-            font-size: 1rem;
-            line-height: 1.6;
-        }
-
-        /* ================= A PROPOS (BENTO GRID STYLE) ================= */
+        /* ================= À PROPOS ================= */
         .about {
             padding: 8rem 4rem;
             max-width: 1200px;
             margin: 0 auto;
             display: flex;
             align-items: center;
-            gap: 4rem;
+            gap: 5rem;
         }
-
         .about-text { flex: 1; }
-        .about-image {
-            flex: 1;
-            height: 500px;
-            background: #e5e5ea; /* Placeholder pour la photo */
-            border-radius: 30px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: #888;
-        }
+        .about-image { flex: 1; height: 540px; border-radius: 24px; overflow: hidden; flex-shrink: 0; }
+        .about-image img { width: 100%; height: 100%; object-fit: cover; object-position: center 12%; display: block; }
+        .about h2 { font-size: clamp(2rem, 3.5vw, 2.8rem); font-weight: 800; letter-spacing: -1px; line-height: 1.15; margin-bottom: 1.5rem; }
+        .about p { font-size: 1.05rem; color: #555; margin-bottom: 1.2rem; font-weight: 300; line-height: 1.75; }
+        .about-list { margin-top: 2rem; list-style: none; display: flex; flex-direction: column; gap: 0.75rem; }
+        .about-list li { font-size: 0.95rem; color: #444; display: flex; align-items: flex-start; gap: 0.6rem; }
+        .about-list li strong { color: var(--text-dark); font-weight: 600; }
+        .check { font-weight: 700; flex-shrink: 0; margin-top: 1px; }
 
-        .about h2 {
-            font-size: 3rem;
-            font-weight: 800;
-            letter-spacing: -1px;
-            margin-bottom: 1.5rem;
+        /* ================= CONTACT (LIGHT GLASS LIQUID) ================= */
+        .contact-section {
+            background: #f2f2f7;
+            padding: 8rem 4rem;
+            position: relative;
+            overflow: hidden;
         }
+        
+        /* Orbes clairs pour le formulaire */
+        .orb-4 { width: 400px; height: 400px; background: #ff9a9e; top: -5%; left: 10%; opacity: 0.5; }
+        .orb-5 { width: 500px; height: 500px; background: #fecfef; bottom: -10%; right: -5%; opacity: 0.6; animation-delay: -3s; }
 
-        .about p {
-            font-size: 1.2rem;
-            color: #555;
-            margin-bottom: 2rem;
+        .contact-inner {
+            display: flex; gap: 5rem; max-width: 1200px; margin: 0 auto; width: 100%; align-items: flex-start;
+            position: relative; z-index: 2;
         }
+        .contact-left { flex: 1; }
+        .contact-left h2 { font-size: clamp(2rem, 3.5vw, 2.8rem); font-weight: 800; letter-spacing: -1px; line-height: 1.15; margin-bottom: 1.2rem; }
+        .contact-left p { font-size: 1.05rem; color: #555; font-weight: 300; line-height: 1.7; margin-bottom: 2.5rem; }
+        
+        .contact-info-list { list-style: none; }
+        .contact-info-list li { display: flex; align-items: center; gap: 1rem; padding: 1rem 0; border-bottom: 1px solid rgba(0,0,0,0.1); font-size: 0.9rem; }
+        .contact-info-list li:first-child { border-top: 1px solid rgba(0,0,0,0.1); }
+        .ci-label { font-size: 0.65rem; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: #888; min-width: 72px; }
+        .ci-value { color: var(--text-dark); }
 
-        /* ================= FOOTER / CTA ================= */
-        footer {
-            background-color: var(--bg-dark);
-            color: white;
-            padding: 8rem 2rem 4rem;
-            text-align: center;
+        .contact-right { flex: 1.2; }
+
+        /* Effet Glassmorphism sur le formulaire */
+        .form {
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.05);
         }
-
-        footer h2 {
-            font-size: 4rem;
-            font-weight: 800;
-            letter-spacing: -1.5px;
-            margin-bottom: 1rem;
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; }
+        .form-cell {
+            display: flex; flex-direction: column;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+            border-right: 1px solid rgba(0,0,0,0.05);
+            transition: background 0.2s;
         }
-
-        footer p {
-            font-size: 1.5rem;
-            color: #a1a1a6;
-            margin-bottom: 3rem;
+        .form-cell:focus-within { background: rgba(255,255,255,0.6); }
+        .form-cell.full { grid-column: 1 / -1; border-right: none; }
+        .form-row .form-cell:nth-child(2) { border-right: none; }
+        .form-cell label { font-size: 0.62rem; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: #888; padding: 14px 18px 0; }
+        .form-cell input, .form-cell textarea, .form-cell select {
+            background: transparent; border: none; outline: none; padding: 6px 18px 16px;
+            font-family: 'Inter', sans-serif; font-size: 0.95rem; color: var(--text-dark); width: 100%;
         }
+        .form-cell input::placeholder, .form-cell textarea::placeholder { color: #aaa; }
+        .form-cell textarea { height: 110px; resize: none; }
+        .form-cell select { color: #888; cursor: pointer; }
+        .form-cell select option { color: var(--text-dark); background: white;}
 
-        .footer-links {
-            margin-top: 6rem;
-            border-top: 1px solid #333;
-            padding-top: 2rem;
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
-            font-size: 0.8rem;
-            color: #666;
+        .form-submit {
+            width: 100%; padding: 18px 24px; background: rgba(0,0,0,0.85); border: none; cursor: pointer;
+            display: flex; align-items: center; justify-content: space-between; transition: background 0.2s;
+            backdrop-filter: blur(10px);
         }
+        .form-submit:hover { background: #000; }
+        .form-submit span { font-family: 'Inter', sans-serif; font-size: 0.9rem; font-weight: 600; color: white; }
+        .submit-arrow {
+            width: 30px; height: 30px; border-radius: 50%; border: 1.5px solid rgba(255,255,255,0.25);
+            display: flex; align-items: center; justify-content: center; color: white; font-size: 14px; transition: transform 0.2s;
+        }
+        .form-submit:hover .submit-arrow { transform: translateX(4px); }
 
-        /* Responsive basique */
-        @media (max-width: 768px) {
-            .hero h1 { font-size: 3.5rem; }
-            .about { flex-direction: column; }
-            header { padding: 1rem; flex-direction: column; gap: 1rem; }
+        /* ================= FOOTER ================= */
+        footer { background-color: var(--bg-dark); color: white; padding: 8rem 2rem 4rem; text-align: center; }
+        footer h2 { font-size: clamp(2.5rem, 6vw, 4rem); font-weight: 800; letter-spacing: -1.5px; margin-bottom: 1rem; line-height: 1.1; }
+        footer > p { font-size: 1.3rem; color: #6e6e73; margin-bottom: 3rem; font-weight: 300; }
+        .footer-links { margin-top: 6rem; border-top: 1px solid #222; padding-top: 2rem; display: flex; justify-content: center; flex-wrap: wrap; gap: 1rem 2rem; font-size: 0.8rem; color: #555; }
+        .footer-links a { color: #555; transition: color 0.2s; }
+        .footer-links a:hover { color: #fff; }
+
+        /* ================= RESPONSIVE ================= */
+        @media (max-width: 900px) {
+            header { padding: 1rem 1.5rem; }
             .nav-links { display: none; }
+            .expertises { padding: 6rem 1.5rem; }
+            .about { flex-direction: column; padding: 6rem 1.5rem; gap: 3rem; }
+            .about-image { width: 100%; flex: none; height: 400px; }
+            .contact-section { padding: 6rem 1.5rem; }
+            .contact-inner { flex-direction: column; gap: 3rem; }
+            .form-row { grid-template-columns: 1fr; }
+            .form-cell { border-right: none !important; }
+            footer { padding: 6rem 1.5rem 3rem; }
         }
     </style>
 </head>
@@ -251,35 +328,72 @@
         <nav class="nav-links">
             <a href="#expertises">Expertises</a>
             <a href="#cabinet">Le Cabinet</a>
-            <a href="#honoraires">Honoraires</a>
+            <a href="#contact">Contact</a>
         </nav>
         <a href="#contact" class="btn-primary">Prendre rendez-vous</a>
     </header>
 
     <section class="hero reveal">
-        <h1>L'immobilier, sécurisé.</h1>
+        <h1>L'immobilier,<br>sécurisé.</h1>
         <p>Protégez vos actifs. Maîtrisez vos opérations. Résolvez vos litiges. Un accompagnement sur-mesure au Barreau de Paris.</p>
-        <a href="#contact" class="btn-primary" style="font-size: 1.1rem; padding: 1rem 2rem;">Analyser mon dossier ↗</a>
+        <a href="#contact" class="btn-primary" style="font-size: 1rem; padding: 1rem 2rem;">Analyser mon dossier ↗</a>
     </section>
 
+    <div class="carousel-section">
+        <div class="carousel-track">
+            <div class="carousel-item"><div class="carousel-dot"></div>Baux commerciaux</div>
+            <div class="carousel-item"><div class="carousel-dot"></div>Droit locatif</div>
+            <div class="carousel-item"><div class="carousel-dot"></div>Copropriété</div>
+            <div class="carousel-item"><div class="carousel-dot"></div>Vices cachés</div>
+            <div class="carousel-item"><div class="carousel-dot"></div>VEFA & Malfaçons</div>
+            <div class="carousel-item"><div class="carousel-dot"></div>Expulsion locative</div>
+            <div class="carousel-item"><div class="carousel-dot"></div>Successions</div>
+            <div class="carousel-item"><div class="carousel-dot"></div>Transactions & Ventes</div>
+            <div class="carousel-item"><div class="carousel-dot"></div>Recouvrement loyers</div>
+            <div class="carousel-item"><div class="carousel-dot"></div>Dommages ouvrage</div>
+            <div class="carousel-item"><div class="carousel-dot"></div>Baux commerciaux</div>
+            <div class="carousel-item"><div class="carousel-dot"></div>Droit locatif</div>
+            <div class="carousel-item"><div class="carousel-dot"></div>Copropriété</div>
+            <div class="carousel-item"><div class="carousel-dot"></div>Vices cachés</div>
+            <div class="carousel-item"><div class="carousel-dot"></div>VEFA & Malfaçons</div>
+            <div class="carousel-item"><div class="carousel-dot"></div>Expulsion locative</div>
+            <div class="carousel-item"><div class="carousel-dot"></div>Successions</div>
+            <div class="carousel-item"><div class="carousel-dot"></div>Transactions & Ventes</div>
+            <div class="carousel-item"><div class="carousel-dot"></div>Recouvrement loyers</div>
+            <div class="carousel-item"><div class="carousel-dot"></div>Dommages ouvrage</div>
+        </div>
+    </div>
+
     <section id="expertises" class="expertises">
+        <div class="liquid-orb orb-1"></div>
+        <div class="liquid-orb orb-2"></div>
+        <div class="liquid-orb orb-3"></div>
+
         <h2 class="section-title reveal">Une expertise pointue.<br>Pour des enjeux majeurs.</h2>
         <div class="grid-expertises">
-            <div class="card reveal" style="transition-delay: 0.1s;">
+            <div class="card reveal" style="transition-delay:0.1s">
                 <h3>Baux Commerciaux</h3>
                 <p>Rédaction, révision, renouvellement et contentieux locatifs. Optimisation de vos loyers et sécurisation de vos actifs commerciaux.</p>
             </div>
-            <div class="card reveal" style="transition-delay: 0.2s;">
+            <div class="card reveal" style="transition-delay:0.2s">
                 <h3>Droit de la Copropriété</h3>
                 <p>Accompagnement des syndics, copropriétaires et résolution des contentieux liés aux assemblées générales.</p>
             </div>
-            <div class="card reveal" style="transition-delay: 0.3s;">
+            <div class="card reveal" style="transition-delay:0.3s">
                 <h3>Transactions & Ventes</h3>
                 <p>Sécurisation des promesses de vente, gestion des vices cachés et audits immobiliers approfondis.</p>
             </div>
-            <div class="card reveal" style="transition-delay: 0.4s;">
+            <div class="card reveal" style="transition-delay:0.4s">
                 <h3>Droit de la Construction</h3>
                 <p>Garanties légales (décennale, parfait achèvement), abandons de chantier et expertises amiables ou judiciaires.</p>
+            </div>
+            <div class="card reveal" style="transition-delay:0.5s">
+                <h3>Expulsion & Résiliation</h3>
+                <p>Procédures d'expulsion, commandements de payer, résiliation judiciaire et recouvrement de loyers impayés.</p>
+            </div>
+            <div class="card reveal" style="transition-delay:0.6s">
+                <h3>Successions Immobilières</h3>
+                <p>Indivision, partage amiable ou judiciaire, licitation et transmission du patrimoine immobilier.</p>
             </div>
         </div>
     </section>
@@ -289,27 +403,83 @@
             <h2>L'alliée de vos projets immobiliers.</h2>
             <p>Inscrite au Barreau de Paris, j'accompagne les investisseurs, les entreprises et les particuliers avec une méthode claire : réactivité, transparence stratégique et pragmatisme.</p>
             <p>La complexité juridique ne doit jamais être un frein à vos ambitions immobilières, mais un levier de sécurité.</p>
-            <ul style="margin-top: 2rem; line-height: 2; list-style: none;">
-                <li>✓ <strong>Réactivité absolue</strong> : Réponses en moins de 24h.</li>
-                <li>✓ <strong>Stratégie sur-mesure</strong> : Chaque dossier est unique.</li>
-                <li>✓ <strong>Transparence</strong> : Honoraires clairs et prévisibles.</li>
+            <ul class="about-list">
+                <li><span class="check">✓</span><span><strong>Réactivité absolue</strong> : Réponses en moins de 24h.</span></li>
+                <li><span class="check">✓</span><span><strong>Stratégie sur-mesure</strong> : Chaque dossier est unique.</span></li>
+                <li><span class="check">✓</span><span><strong>Transparence</strong> : Honoraires clairs et prévisibles.</span></li>
+                <li><span class="check">✓</span><span><strong>Visio disponible</strong> : Cabinet, téléphone ou vidéo.</span></li>
             </ul>
         </div>
-        <div class="about-image reveal" style="transition-delay: 0.2s;">
-            [ Emplacement pour la photo de Sarah Melki ]
+        <div class="about-image reveal" style="transition-delay:0.2s">
+            <img src="/mnt/user-data/uploads/WhatsApp_Image_2026-03-08_at_20_26_08.jpeg"
+                 alt="Maître Sarah Melki, avocate en droit immobilier Paris">
         </div>
     </section>
 
-    <footer id="contact" class="reveal">
-        <h2>Prêt à sécuriser vos intérêts ?</h2>
+    <section id="contact" class="contact-section">
+        <div class="liquid-orb orb-4"></div>
+        <div class="liquid-orb orb-5"></div>
+
+        <div class="contact-inner">
+            <div class="contact-left reveal">
+                <h2>Parlons de votre situation.</h2>
+                <p>Première consultation offerte. Je réponds personnellement à chaque message en moins de 24h.</p>
+                <ul class="contact-info-list">
+                    <li><span class="ci-label">Cabinet</span><span class="ci-value">Paris — Barreau de Paris</span></li>
+                    <li><span class="ci-label">Tél.</span><span class="ci-value">+33 (0)1 XX XX XX XX</span></li>
+                    <li><span class="ci-label">Email</span><span class="ci-value">contact@sarahmelki-avocate.fr</span></li>
+                    <li><span class="ci-label">Visio</span><span class="ci-value">Zoom · Teams · Google Meet</span></li>
+                </ul>
+            </div>
+            <div class="contact-right reveal" style="transition-delay:0.15s">
+                <div class="form">
+                    <div class="form-row">
+                        <div class="form-cell"><label>Prénom</label><input type="text" placeholder="Jean"></div>
+                        <div class="form-cell"><label>Nom</label><input type="text" placeholder="Dupont"></div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-cell"><label>Email</label><input type="email" placeholder="jean@exemple.fr"></div>
+                        <div class="form-cell"><label>Téléphone</label><input type="tel" placeholder="+33 6 XX XX XX XX"></div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-cell full"><label>Domaine</label>
+                            <select>
+                                <option value="" disabled selected>Votre problématique</option>
+                                <option>Baux commerciaux</option>
+                                <option>Expulsion / Résiliation</option>
+                                <option>Copropriété</option>
+                                <option>Transactions & Ventes</option>
+                                <option>VEFA / Malfaçons</option>
+                                <option>Vices cachés</option>
+                                <option>Successions</option>
+                                <option>Autre</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-cell full"><label>Message</label>
+                            <textarea placeholder="Décrivez brièvement votre situation..."></textarea>
+                        </div>
+                    </div>
+                    <button class="form-submit"
+                        onclick="this.querySelector('span').textContent='✓ Message envoyé — réponse sous 24h'; this.style.background='#1a7a3c';">
+                        <span>Envoyer ma demande</span>
+                        <div class="submit-arrow">→</div>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer id="honoraires" class="reveal">
+        <h2>Prêt à sécuriser<br>vos intérêts ?</h2>
         <p>Parlons de votre dossier en toute confidentialité.</p>
-        <a href="mailto:contact@sarahmelki-avocate.fr" class="btn-primary" style="background: white; color: black; font-size: 1.2rem; padding: 1rem 2.5rem;">Planifier un appel</a>
-        
+        <a href="#contact" class="btn-primary" style="background:white;color:black;font-size:1.1rem;padding:1rem 2.5rem;">Planifier un appel</a>
         <div class="footer-links">
             <span>© 2026 Cabinet Sarah Melki</span>
             <a href="#">Mentions Légales</a>
             <a href="#">Politique de confidentialité</a>
-            <span>Toque P0000 - Barreau de Paris</span>
+            <span>Toque P0000 — Barreau de Paris</span>
         </div>
     </footer>
 
@@ -317,22 +487,12 @@
         document.addEventListener('DOMContentLoaded', () => {
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('active');
-                    }
+                    if (entry.isIntersecting) entry.target.classList.add('active');
                 });
-            }, {
-                threshold: 0.15 // Déclenche l'animation quand 15% de l'élément est visible
-            });
+            }, { threshold: 0.12 });
 
-            document.querySelectorAll('.reveal').forEach((element) => {
-                observer.observe(element);
-            });
-            
-            // Activer la première section immédiatement
-            setTimeout(() => {
-                document.querySelector('.hero').classList.add('active');
-            }, 100);
+            document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+            setTimeout(() => document.querySelector('.hero').classList.add('active'), 100);
         });
     </script>
 </body>
