@@ -101,14 +101,23 @@
             transition: background .2s, transform .15s; flex-shrink: 0;
         }
         .nav-social:hover { background: var(--accent-or); transform: translateY(-2px); }
-        .nav-social svg { width: 14px; height: 14px; fill: var(--accent-bleu); transition: fill .2s; }
+        .nav-social svg { width: 14px; height: 14px; transition: fill .2s; }
         .nav-social:hover svg { fill: #fff; }
+        /* Instagram color */
+        .nav-social[aria-label="Instagram"] svg { fill: #E1306C; }
+        .nav-social[aria-label="Instagram"]:hover svg { fill: #fff; }
+        /* TikTok color */
+        .nav-social[aria-label="TikTok"] svg { fill: #000000; }
+        .nav-social[aria-label="TikTok"]:hover svg { fill: #fff; }
+        /* LinkedIn color */
+        .nav-social[aria-label="LinkedIn"] svg { fill: #0077B5; }
+        .nav-social[aria-label="LinkedIn"]:hover svg { fill: #fff; }
 
         /* ── RESPONSIVE HEADER ── */
         @media (max-width: 640px) {
             header { padding: .85rem 1.2rem; gap: .6rem; }
-            .logo-text { font-size: .95rem; }
-            .logo-text span { font-size: .58rem; }
+            .logo-text { font-size: .82rem; white-space: nowrap; }
+            .logo-text span { display: inline; font-size: .82rem; font-weight: 700; color: var(--text-dark); letter-spacing: 0.3px; margin-top: 0; }
             /* Cacher les socials sur très petit écran, garder CTA */
             .nav-social { width: 30px; height: 30px; }
             .nav-social svg { width: 12px; height: 12px; }
@@ -140,7 +149,7 @@
             position: relative; z-index: 2; max-width: 800px;
         }
         .hero h1 { font-size: clamp(3.5rem, 6vw, 5.5rem); font-weight: 700; line-height: 1.1; margin-bottom: 1.5rem; color: var(--text-dark); }
-        .hero h1 i { color: var(--accent-or); font-weight: 500; }
+        .hero h1 i { color: var(--accent-or); font-weight: 500; font-size: 1.15em; }
         .hero p { font-size: 1.2rem; color: #555; font-weight: 300; margin-bottom: 3rem; font-family: 'Inter', sans-serif; }
 
         /* ── EXPERTISES — GLASS LIQUID DARK ── */
@@ -176,7 +185,7 @@
         .carousel-outer {
             position: relative; z-index: 2;
             overflow: hidden; /* masque le défilement natif */
-            padding: 0 0 2.5rem;
+            padding: 0 0 3.5rem;
         }
         /* fade sur les bords */
         .carousel-outer::before, .carousel-outer::after {
@@ -286,8 +295,8 @@
         .badge-num { font-family: 'Playfair Display'; font-size: 1.8rem; color: var(--accent-or); line-height: 1; }
         .badge-lbl { font-size: .56rem; font-weight: 600; letter-spacing: .15em; text-transform: uppercase; color: rgba(255,255,255,.45); margin-top: .2rem; }
 
-        .about h2 { font-size: clamp(2rem, 3.5vw, 2.8rem); margin-bottom: 1.5rem; color: var(--text-dark); line-height: 1.15; }
-        .about h2 i { color: var(--accent-or); }
+        .about h2 { font-size: clamp(1.2rem, 2vw, 1.6rem); margin-bottom: 1.5rem; color: var(--text-dark); line-height: 1.15; }
+        .about h2 i { color: var(--accent-or); font-size: 0.85em; display: block; margin-top: 0.3rem; }
         .about p { font-size: 1.05rem; color: #555; margin-bottom: 1.2rem; font-weight: 300; line-height: 1.75; }
         .about-list { margin-top: 2rem; list-style: none; display: flex; flex-direction: column; gap: .8rem; }
         .about-list li { font-size: .95rem; color: #444; display: flex; align-items: flex-start; gap: .6rem; }
@@ -317,7 +326,7 @@
         .contact-info-list { list-style: none; }
         .contact-info-list li { display: flex; align-items: center; gap: 1rem; padding: 1rem 0; border-bottom: 1px solid rgba(0,0,0,.1); font-size: .9rem; }
         .contact-info-list li:first-child { border-top: 1px solid rgba(0,0,0,.1); }
-        .ci-label { font-size: .62rem; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: #888; min-width: 72px; }
+        .ci-label { font-size: .62rem; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: #888; min-width: 90px; flex-shrink: 0; }
         .contact-right { flex: 1.2; }
 
         /* Formulaire blanc épuré */
@@ -375,6 +384,14 @@
             .contact-inner { flex-direction: column; gap: 3rem; }
             .form-row { grid-template-columns: 1fr; }
             .form-cell { border-right: none !important; }
+            /* 8. Formulaire mobile centré et plus grand */
+            .contact-right { width: 100%; }
+            .form { border-radius: 20px; }
+            .form-cell label { font-size: .75rem; padding: 18px 20px 0; }
+            .form-cell input, .form-cell textarea, .form-cell select { font-size: 1.05rem; padding: 8px 20px 20px; }
+            .form-cell textarea { height: 130px; }
+            .form-submit { padding: 24px 28px; }
+            .form-submit span { font-size: 1rem; }
             footer { flex-direction: column; text-align: center; padding: 2rem; }
             .expertises { padding: 5rem 0; }
             .carousel-track { padding: .5rem 1.5rem .5rem; }
@@ -383,7 +400,7 @@
             .hero h1 { font-size: clamp(2.5rem, 8vw, 4rem); }
             .hero p { font-size: 1rem; }
             .section-title { font-size: clamp(1.8rem, 6vw, 2.8rem); padding: 0 1.5rem; }
-            .about h2 { font-size: clamp(1.8rem, 6vw, 2.5rem); }
+            .about h2 { font-size: clamp(1rem, 4vw, 1.4rem); }
             .contact-left h2 { font-size: clamp(2rem, 7vw, 2.8rem); }
         }
     </style>
@@ -430,42 +447,77 @@
             <div class="card">
                 <span class="card-ico">📄</span>
                 <h3>Baux d'Habitation</h3>
-                <p>Rédaction, révision et contentieux de baux d'habitation. Sécurisation des droits locatifs et accompagnement en cas de litige bailleur-locataire.</p>
+                <p>Vous louez ou vous êtes propriétaire ? On rédige votre bail, on le sécurise, et on vous défend en cas de conflit avec votre locataire ou votre bailleur.</p>
             </div>
             <div class="card">
                 <span class="card-ico">⚖️</span>
                 <h3>Expulsion Locative</h3>
-                <p>Procédures d'expulsion, commandements de payer et résiliation judiciaire. Recouvrement efficace des loyers impayés.</p>
+                <p>Votre locataire ne paie plus ou refuse de partir ? On engage la procédure d'expulsion et on récupère les loyers impayés.</p>
             </div>
             <div class="card">
                 <span class="card-ico">🏢</span>
                 <h3>Copropriété</h3>
-                <p>Accompagnement des syndics et copropriétaires. Contentieux d'assemblées générales, charges et travaux de copropriété.</p>
+                <p>Conflit avec votre syndic, contestation d'une décision en assemblée générale, litiges sur les charges ou les travaux ? On vous accompagne.</p>
             </div>
             <div class="card">
                 <span class="card-ico">🏠</span>
                 <h3>Vente & Acquisition</h3>
-                <p>Sécurisation des promesses de vente, gestion des vices cachés et audits juridiques immobiliers approfondis.</p>
+                <p>Litige suite à une vente, promesse non respectée, refus de signature chez le notaire ? On vous défend et on fait valoir vos droits devant les tribunaux.</p>
             </div>
             <div class="card">
                 <span class="card-ico">🏗️</span>
                 <h3>Construction & Malfaçons</h3>
-                <p>Garanties légales (décennale, parfait achèvement), abandons de chantier et expertises amiables ou judiciaires.</p>
+                <p>Votre chantier a été mal réalisé ou abandonné ? On fait valoir vos garanties légales et on obtient réparation auprès des entreprises responsables.</p>
             </div>
             <div class="card">
                 <span class="card-ico">🏪</span>
                 <h3>Baux Commerciaux</h3>
-                <p>Rédaction, révision, renouvellement et contentieux locatifs. Optimisation des loyers et sécurisation des actifs commerciaux.</p>
+                <p>Vous êtes commerçant ou bailleur ? On rédige, révise ou renégocie votre bail commercial et on vous défend en cas de litige.</p>
             </div>
             <div class="card">
                 <span class="card-ico">🔍</span>
                 <h3>Vices Cachés</h3>
-                <p>Détection, expertise et action en garantie des vices cachés. Défense des acquéreurs face aux vendeurs de mauvaise foi.</p>
+                <p>Vous avez acheté un bien avec un défaut que le vendeur vous a caché ? On engage la procédure pour obtenir remboursement ou réduction du prix.</p>
             </div>
             <div class="card">
                 <span class="card-ico">💶</span>
                 <h3>Recouvrement de Loyers</h3>
-                <p>Procédures de recouvrement amiables et judiciaires. Injonctions de payer et saisies pour récupérer vos créances locatives.</p>
+                <p>Loyers impayés ? On met en demeure, on saisit la justice et on récupère les sommes dues — à l'amiable ou par voie judiciaire.</p>
+            </div>
+            <div class="card">
+                <span class="card-ico">🔊</span>
+                <h3>Troubles de Voisinage</h3>
+                <p>Bruit, nuisances, empiètement ou conflit de limite de propriété ? On intervient pour faire cesser les troubles et obtenir réparation si nécessaire.</p>
+            </div>
+            <div class="card">
+                <span class="card-ico">🔑</span>
+                <h3>Dépôt de Garantie</h3>
+                <p>Propriétaire, vous souhaitez retenir tout ou partie du dépôt ? Locataire, on vous refuse le remboursement ? On analyse votre situation et on agit pour défendre vos droits.</p>
+            </div>
+            <div class="card">
+                <span class="card-ico">📬</span>
+                <h3>Congé Locatif</h3>
+                <p>Vous souhaitez récupérer votre bien pour le vendre, l'habiter ou pour motif sérieux ? On vous conseille sur la procédure et on intervient si le locataire refuse de partir.</p>
+            </div>
+            <div class="card">
+                <span class="card-ico">🧑‍⚖️</span>
+                <h3>Expertise Judiciaire</h3>
+                <p>Vous avez besoin de faire nommer un expert par le tribunal, ou une expertise est déjà en cours ? On vous accompagne à chaque étape pour défendre vos intérêts.</p>
+            </div>
+            <div class="card">
+                <span class="card-ico">😤</span>
+                <h3>Trouble de Jouissance</h3>
+                <p>Infiltrations, moisissures, logement indécent ou équipements hors service ? On intervient pour contraindre le propriétaire à réaliser les travaux et obtenir l'indemnisation de votre préjudice.</p>
+            </div>
+            <div class="card">
+                <span class="card-ico">🤝</span>
+                <h3>Cession de Fonds de Commerce & Droit au Bail</h3>
+                <p>Vous cédez ou reprenez un commerce ? On rédige l'acte de cession et on prend en charge toutes les formalités juridiques qui l'accompagnent.</p>
+            </div>
+            <div class="card">
+                <span class="card-ico">🏦</span>
+                <h3>Charges de Copropriété</h3>
+                <p>Syndics, vous faites face à des copropriétaires qui ne règlent pas leurs charges ? On prend en charge le recouvrement de bout en bout.</p>
             </div>
         </div>
     </div>
@@ -476,7 +528,7 @@
 <section id="cabinet" class="about">
     <div class="about-text reveal">
         <h2>VOTRE AVOCAT EN DROIT IMMOBILIER<br><i>De l'écoute, des conseils clairs, une réponse rapide</i></h2>
-        <p>Inscrite au Barreau de Paris, Maître Sarah Melki accompagne les entreprises et les particuliers avec une méthode claire : réactivité, transparence stratégique et efficacité.</p>
+        <p>Inscrite au Barreau de Paris, Maître Sarah Melki accompagne les entreprises et les particuliers avec une méthode claire : réactivité, transparence et efficacité.</p>
                <ul class="about-list">
             <li><span class="check">✦</span><span><strong>Expertise exclusive</strong> — Cabinet 100&nbsp;% dédié au droit immobilier et commercial.</span></li>
             <li><span class="check">✦</span><span><strong>Réactivité absolue</strong> — Disponible via WhatsApp pour une communication fluide et directe. Vos questions reçoivent une réponse quasi instantanément, parce que votre temps est précieux.</span></li>
@@ -530,7 +582,6 @@
                     <span>
                         <a href="mailto:s.melki.avocat@gmail.com">s.melki.avocat@gmail.com</a>
                     </span>
-                </li>
             </ul>
 
             <!-- Mini‑carte intégrée -->
@@ -548,14 +599,14 @@
         </div>
 
         <div class="contact-right reveal" style="transition-delay:.15s">
-            <div class="form">
+            <form class="form" onsubmit="event.preventDefault(); this.querySelector('.form-submit span').textContent='✓ Message envoyé — réponse sous 24h'; this.querySelector('.form-submit').style.background='#1a7a3c';"novalidate>
                 <div class="form-row">
-                    <div class="form-cell"><label>Prénom</label><input type="text" placeholder="Jean"></div>
-                    <div class="form-cell"><label>Nom</label><input type="text" placeholder="Dupont"></div>
+                    <div class="form-cell"><label>Prénom</label><input type="text" placeholder="Jean" required minlength="2"></div>
+                    <div class="form-cell"><label>Nom</label><input type="text" placeholder="Dupont" required minlength="2"></div>
                 </div>
                 <div class="form-row">
-                    <div class="form-cell"><label>Email</label><input type="email" placeholder="jean@exemple.fr"></div>
-                    <div class="form-cell"><label>Téléphone</label><input type="tel" placeholder="+33 6 XX XX XX XX"></div>
+                    <div class="form-cell"><label>Email</label><input type="email" placeholder="jean@exemple.fr" required></div>
+                    <div class="form-cell"><label>Téléphone</label><input type="tel" placeholder="+33 6 XX XX XX XX" required pattern="^(\+33|0)[1-9](\s?\d{2}){4}$" title="Format attendu : +33 6 XX XX XX XX ou 06 XX XX XX XX"></div>
                 </div>
                 <div class="form-row">
                     <div class="form-cell full"><label>Domaine</label>
@@ -578,11 +629,11 @@
                         <textarea placeholder="Décrivez votre situation..."></textarea>
                     </div>
                 </div>
-                <button class="form-submit" onclick="this.querySelector('span').textContent='✓ Message envoyé — réponse sous 24h'; this.style.background='#1a7a3c';">
+                <button class="form-submit" type="submit">
                     <span>Envoyer la demande</span>
                     <div class="submit-arrow">→</div>
                 </button>
-            </div>
+            </form>
         </div>
     </div>
 </section>
@@ -599,7 +650,7 @@
     <span class="footer-copy">© 2026 PlaidImmo — Barreau de Paris</span>
 </footer>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 // Reveal au scroll
 document.addEventListener('DOMContentLoaded', () => {
     const obs = new IntersectionObserver((entries) => {
@@ -634,14 +685,17 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function goTo(n) {
-        const maxIdx = Math.max(0, TOTAL - Math.floor((outer.offsetWidth - 128) / STEP));
-        idx = Math.max(0, Math.min(n, maxIdx));
+        const visibleCards = Math.floor((outer.offsetWidth - 128) / STEP);
+        const maxIdx = Math.max(0, TOTAL - visibleCards);
+        if (n > maxIdx) { idx = 0; }
+        else if (n < 0) { idx = maxIdx; }
+        else { idx = n; }
         track.style.transform = 'translateX(-' + (idx * STEP) + 'px)';
         updateDots();
     }
 
-    function next() { goTo(idx >= TOTAL - 1 ? 0 : idx + 1); }
-    function prev() { goTo(idx <= 0 ? TOTAL - 1 : idx - 1); }
+    function next() { goTo(idx + 1); }
+    function prev() { goTo(idx - 1); }
 
     function startAuto() {
         clearInterval(timer);
