@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sarah Melki — Avocat</title>
+    <title>Sarah Melki — Avocate</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,500;0,700;1,500&display=swap" rel="stylesheet">
     
@@ -246,14 +246,14 @@
         .carousel-outer {
             position: relative; z-index: 2;
             overflow: hidden; /* masque le défilement natif */
-            padding: 0 0 3.5rem;
+            padding: 0 0 0.5rem;
         }
         /* fade sur les bords */
         .carousel-outer::before, .carousel-outer::after {
-            content: ''; position: absolute; top: 0; bottom: 2.5rem; width: 140px; z-index: 3; pointer-events: none;
+            content: ''; position: absolute; top: 0; bottom: 2.5rem; width: 80px; z-index: 3; pointer-events: none;
         }
-        .carousel-outer::before { left: 0; background: linear-gradient(to right, rgba(240,237,230,.9), transparent); }
-        .carousel-outer::after  { right: 0; background: linear-gradient(to left, rgba(240,237,230,.9), transparent); }
+        .carousel-outer::before { left: 0; background: linear-gradient(to right, rgba(240,237,230,0.45) 0%, transparent 100%); }
+        .carousel-outer::after  { right: 0; background: linear-gradient(to left, rgba(240,237,230,0.45) 0%, transparent 100%); }
 
         .carousel-track {
             display: flex; gap: 2rem;
@@ -285,6 +285,18 @@
             transition: transform var(--transition), border-color 0.3s, background 0.3s, box-shadow 0.3s;
             position: relative; overflow: hidden;
         }
+        /* Carte avec image de fond */
+        .card-bg-img {
+            background-color: transparent !important;
+            backdrop-filter: none !important;
+            -webkit-backdrop-filter: none !important;
+        }
+        .card-bg-overlay {
+            position: absolute; inset: 0;
+            background: linear-gradient(160deg, rgba(255,255,255,0.55) 0%, rgba(255,255,255,0.72) 100%);
+            border-radius: 28px;
+            z-index: 0;
+        }
         .card::before {
             content: '';
             position: absolute; top: -40%; left: -60%;
@@ -312,16 +324,32 @@
         .card p { color: #555; font-size: .92rem; font-weight: 300; line-height: 1.75; position: relative; z-index: 1; text-align: justify; }
 
 
-        .carousel-dots {
-            display: flex; justify-content: center; gap: .45rem;
-            padding-top: .5rem; position: relative; z-index: 2;
+        /* ── FLÈCHES CAROUSEL ── */
+        .carousel-wrapper {
+            position: relative;
         }
-        .dot {
-            width: 6px; height: 6px; border-radius: 50%;
-            background: rgba(29,29,31,.2); border: none; cursor: pointer;
-            transition: all .35s cubic-bezier(.34,1.4,.64,1); padding: 0;
+        .carousel-arrow {
+            position: absolute; top: 50%; transform: translateY(-50%);
+            width: 64px; height: 64px; border-radius: 50%;
+            background: transparent;
+            border: none;
+            box-shadow: none;
+            cursor: pointer; color: rgba(29,29,31,0);
+            display: flex; align-items: center; justify-content: center;
+            transition: color .3s, transform .3s;
+            z-index: 10;
+            opacity: 0;
         }
-        .dot.active { background: var(--accent-or); width: 22px; border-radius: 3px; }
+        .carousel-wrapper:hover .carousel-arrow {
+            opacity: 1;
+        }
+        #cprev { left: 0.6rem; }
+        #cnext { right: 0.6rem; }
+        .carousel-arrow:hover {
+            color: var(--accent-or);
+            transform: translateY(-50%) scale(1.12);
+        }
+        .carousel-arrow svg { width: 48px; height: 48px; fill: currentColor; pointer-events: none; filter: drop-shadow(0 2px 8px rgba(0,0,0,0.18)); }
 
         /* ── À PROPOS ── */
         .about {
@@ -584,86 +612,78 @@
     <div class="liquid-orb orb-3-exp"></div>
 
     <h2 class="section-title reveal">DOMAINES D'INTERVENTION</h2>
-    <div class="carousel-outer">
-        <div class="carousel-track" id="ctrack">
-            <div class="card">
-                <span class="card-ico">📄</span>
-                <h3>Baux d'Habitation</h3>
-                <p>Vous louez ou vous êtes propriétaire ? On rédige votre bail, on le sécurise, et on vous défend en cas de conflit avec votre locataire ou votre bailleur.</p>
-            </div>
-            <div class="card">
-                <span class="card-ico">⚖️</span>
-                <h3>Expulsion Locative</h3>
-                <p>Votre locataire ne paie plus ou refuse de partir ? On engage la procédure d'expulsion et on récupère les loyers impayés.</p>
-            </div>
-            <div class="card">
-                <span class="card-ico">🏢</span>
-                <h3>Copropriété</h3>
-                <p>Conflit avec votre syndic, contestation d'une décision en assemblée générale, litiges sur les charges ou les travaux ? On vous accompagne.</p>
-            </div>
-            <div class="card">
-                <span class="card-ico">🏠</span>
-                <h3>Vente & Acquisition</h3>
-                <p>Litige suite à une vente, promesse non respectée, refus de signature chez le notaire ? On vous défend et on fait valoir vos droits devant les tribunaux.</p>
-            </div>
-            <div class="card">
-                <span class="card-ico">🏗️</span>
-                <h3>Construction & Malfaçons</h3>
-                <p>Votre chantier a été mal réalisé ou abandonné ? On fait valoir vos garanties légales et on obtient réparation auprès des entreprises responsables.</p>
-            </div>
-            <div class="card">
-                <span class="card-ico">🏪</span>
-                <h3>Baux Commerciaux</h3>
-                <p>Vous êtes commerçant ou bailleur ? On rédige, révise ou renégocie votre bail commercial et on vous défend en cas de litige.</p>
-            </div>
-            <div class="card">
-                <span class="card-ico">🔍</span>
-                <h3>Vices Cachés</h3>
-                <p>Vous avez acheté un bien avec un défaut que le vendeur vous a caché ? On engage la procédure pour obtenir remboursement ou réduction du prix.</p>
-            </div>
-            <div class="card">
-                <span class="card-ico">💶</span>
-                <h3>Recouvrement de Loyers</h3>
-                <p>Loyers impayés ? On met en demeure, on saisit la justice et on récupère les sommes dues — à l'amiable ou par voie judiciaire.</p>
-            </div>
-            <div class="card">
-                <span class="card-ico">🔊</span>
-                <h3>Troubles de Voisinage</h3>
-                <p>Bruit, nuisances, empiètement ou conflit de limite de propriété ? On intervient pour faire cesser les troubles et obtenir réparation si nécessaire.</p>
-            </div>
-            <div class="card">
-                <span class="card-ico">🔑</span>
-                <h3>Dépôt de Garantie</h3>
-                <p>Propriétaire, vous souhaitez retenir tout ou partie du dépôt ? Locataire, on vous refuse le remboursement ? On analyse votre situation et on agit pour défendre vos droits.</p>
-            </div>
-            <div class="card">
-                <span class="card-ico">📬</span>
-                <h3>Congé Locatif</h3>
-                <p>Vous souhaitez récupérer votre bien pour le vendre, l'habiter ou pour motif sérieux ? On vous conseille sur la procédure et on intervient si le locataire refuse de partir.</p>
-            </div>
-            <div class="card">
-                <span class="card-ico">🧑‍⚖️</span>
-                <h3>Expertise Judiciaire</h3>
-                <p>Vous avez besoin de faire nommer un expert par le tribunal, ou une expertise est déjà en cours ? On vous accompagne à chaque étape pour défendre vos intérêts.</p>
-            </div>
-            <div class="card">
-                <span class="card-ico">😤</span>
-                <h3>Trouble de Jouissance</h3>
-                <p>Infiltrations, moisissures, logement indécent ou équipements hors service ? On intervient pour contraindre le propriétaire à réaliser les travaux et obtenir l'indemnisation de votre préjudice.</p>
-            </div>
-            <div class="card">
-                <span class="card-ico">🤝</span>
-                <h3>Cession de Fonds de Commerce & Droit au Bail</h3>
-                <p>Vous cédez ou reprenez un commerce ? On rédige l'acte de cession et on prend en charge toutes les formalités juridiques qui l'accompagnent.</p>
-            </div>
-            <div class="card">
-                <span class="card-ico">🏦</span>
-                <h3>Charges de Copropriété</h3>
-                <p>Syndics, vous faites face à des copropriétaires qui ne règlent pas leurs charges ? On prend en charge le recouvrement de bout en bout.</p>
+    <div class="carousel-wrapper">
+        <div class="carousel-outer">
+            <div class="carousel-track" id="ctrack">
+                <div class="card">
+                    <h3>Baux d'Habitation</h3>
+                    <p>Bail meublé, non meublé ou bail civil : nous vous conseillons et intervenons en cas de litige avec votre locataire ou votre bailleur.</p>
+                </div>
+                <div class="card">
+                    <h3>Expulsion Locative</h3>
+                    <p>Votre locataire ne paie plus ou refuse de partir ? Nous lançons la procédure, obtenons la résiliation du bail et la restitution de votre logement.</p>
+                </div>
+                <div class="card">
+                    <h3>Copropriété</h3>
+                    <p>Conflit avec le syndic, le syndicat des copropriétaires ou un autre copropriétaire, charges contestées, travaux ou assemblée générale : nous intervenons pour faire valoir vos droits.</p>
+                </div>
+                <div class="card">
+                    <h3>Vente &amp; Acquisition</h3>
+                    <p>Vente bloquée, promesse non respectée, litige après achat : nous intervenons pour débloquer la situation ou obtenir réparation.</p>
+                </div>
+                <div class="card">
+                    <h3>Construction &amp; Malfaçons</h3>
+                    <p>Travaux mal réalisés, chantier abandonné, désordres après travaux : nous engageons la responsabilité des intervenants et obtenons réparation.</p>
+                </div>
+                <div class="card">
+                    <h3>Baux Commerciaux</h3>
+                    <p>Bail commercial, loyer, renouvellement ou résiliation : nous vous conseillons et vous défendons en cas de litige.</p>
+                </div>
+                <div class="card">
+                    <h3>Vices Cachés</h3>
+                    <p>Vous découvrez un défaut après l'achat ou êtes mis en cause en tant que vendeur ? Nous analysons votre situation et défendons vos intérêts.</p>
+                </div>
+                <div class="card">
+                    <h3>Recouvrement de Loyers</h3>
+                    <p>Loyers impayés ? Nous engageons les démarches nécessaires et obtenons une décision de justice en votre faveur.</p>
+                </div>
+                <div class="card">
+                    <h3>Troubles de Voisinage</h3>
+                    <p>Bruit, nuisances, troubles répétés : nous intervenons pour faire cesser la situation et obtenir réparation.</p>
+                </div>
+                <div class="card">
+                    <h3>Dépôt de Garantie</h3>
+                    <p>Dépôt non restitué ou retenue contestée ? Nous analysons votre situation et défendons vos droits.</p>
+                </div>
+                <div class="card">
+                    <h3>Congé Locatif</h3>
+                    <p>Vous souhaitez donner congé ou contester un congé ? Nous sécurisons la procédure et vous défendons en cas de litige.</p>
+                </div>
+                <div class="card">
+                    <h3>Expertise Judiciaire</h3>
+                    <p>Besoin d'un expert ou déjà engagé dans une expertise ? Nous vous accompagnons à chaque étape pour défendre efficacement vos intérêts.</p>
+                </div>
+                <div class="card">
+                    <h3>Trouble de Jouissance</h3>
+                    <p>Logement insalubre, infiltrations, équipements défectueux : nous intervenons pour faire cesser les désordres et obtenir indemnisation.</p>
+                </div>
+                <div class="card">
+                    <h3>Cession de Fonds de Commerce &amp; Droit au Bail</h3>
+                    <p>Cession ou acquisition : nous rédigeons les actes et prenons en charge les formalités pour sécuriser l'opération.</p>
+                </div>
+                <div class="card">
+                    <h3>Charges de Copropriété (Syndics)</h3>
+                    <p>Nous accompagnons régulièrement les syndics dans le recouvrement des charges et la gestion des impayés.</p>
+                </div>
             </div>
         </div>
+        <button class="carousel-arrow" id="cprev" aria-label="Précédent">
+            <svg viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
+        </button>
+        <button class="carousel-arrow" id="cnext" aria-label="Suivant">
+            <svg viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
+        </button>
     </div>
-    <div class="carousel-dots" id="cdots"></div>
 </section>
 
 <!-- À PROPOS -->
@@ -809,38 +829,26 @@ document.addEventListener('DOMContentLoaded', () => {
     setTimeout(() => document.querySelector('.hero').classList.add('active'), 100);
 });
 
-// ── Carrousel autoplay + hover zones ──
+// ── Carrousel autoplay + flèches + swipe ──
 (function() {
-    const track   = document.getElementById('ctrack');
-    const outer   = track.parentElement;
-    const dotsEl  = document.getElementById('cdots');
-    const TOTAL   = track.querySelectorAll('.card').length;
-    const GAP     = 32;
-    const CARD_W  = 340;
-    const STEP    = CARD_W + GAP;
+    const track  = document.getElementById('ctrack');
+    const outer  = track.parentElement;
+    const btnPrev = document.getElementById('cprev');
+    const btnNext = document.getElementById('cnext');
+    const TOTAL  = track.querySelectorAll('.card').length;
+    const GAP    = 32;
+    const CARD_W = 340;
+    const STEP   = CARD_W + GAP;
     let idx = 0, timer;
-    // vitesse : normal=3000ms, rapide=600ms
-    let speed = 3000;
-
-    for (let i = 0; i < TOTAL; i++) {
-        const d = document.createElement('button');
-        d.className = 'dot' + (i === 0 ? ' active' : '');
-        d.addEventListener('click', () => { clearInterval(timer); goTo(i); startAuto(); });
-        dotsEl.appendChild(d);
-    }
-
-    function updateDots() {
-        dotsEl.querySelectorAll('.dot').forEach((d, i) => d.classList.toggle('active', i === idx));
-    }
+    const speed  = 3000;
 
     function goTo(n) {
-        const visibleCards = Math.floor((outer.offsetWidth - 128) / STEP);
+        const visibleCards = Math.max(1, Math.floor(outer.offsetWidth / STEP));
         const maxIdx = Math.max(0, TOTAL - visibleCards);
         if (n > maxIdx) { idx = 0; }
         else if (n < 0) { idx = maxIdx; }
         else { idx = n; }
         track.style.transform = 'translateX(-' + (idx * STEP) + 'px)';
-        updateDots();
     }
 
     function next() { goTo(idx + 1); }
@@ -851,33 +859,9 @@ document.addEventListener('DOMContentLoaded', () => {
         timer = setInterval(next, speed);
     }
 
-    // Zones de survol gauche/droite
-    outer.addEventListener('mousemove', e => {
-        const rect = outer.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const w = rect.width;
-        const zone = w * 0.2; // 20% de chaque côté
-        if (x < zone) {
-            speed = 600;
-            clearInterval(timer);
-            timer = setInterval(prev, speed);
-        } else if (x > w - zone) {
-            speed = 600;
-            clearInterval(timer);
-            timer = setInterval(next, speed);
-        } else {
-                if (speed !== 3000) {
-                speed = 3000;
-                clearInterval(timer);
-                timer = setInterval(next, speed);
-            }
-        }
-    });
-
-    outer.addEventListener('mouseleave', () => {
-        speed = 3000;
-        startAuto();
-    });
+    // Flèches
+    btnPrev.addEventListener('click', () => { clearInterval(timer); prev(); startAuto(); });
+    btnNext.addEventListener('click', () => { clearInterval(timer); next(); startAuto(); });
 
     // Touch swipe
     let tx = 0;
