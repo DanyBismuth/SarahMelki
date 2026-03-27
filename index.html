@@ -2,9 +2,39 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
+    <title>Maître Sarah Melki – Avocat droit immobilier Paris | PlaidImmo</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sarah Melki — Avocat</title>
-    
+
+    <!-- SEO -->
+    <meta name="description" content="Maître Sarah Melki, avocat spécialisé en droit immobilier à Paris. Transactions, litiges, baux commerciaux, vices cachés. Consultation sur rendez-vous.">
+    <meta name="robots" content="index, follow">
+
+    <!-- Performance : preconnect Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Maître Sarah Melki – Avocat droit immobilier Paris">
+    <meta property="og:description" content="Cabinet spécialisé en droit immobilier à Paris. Transactions, litiges, baux commerciaux.">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="fr_FR">
+
+    <!-- Schema.org LegalService -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "LegalService",
+      "name": "Maître Sarah Melki – Avocat",
+      "description": "Cabinet spécialisé en droit immobilier à Paris",
+      "areaServed": "Paris",
+      "serviceType": "Droit immobilier",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Paris",
+        "addressCountry": "FR"
+      }
+    }
+    </script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,500;0,700;1,500&display=swap" rel="stylesheet">
     
     <style>
@@ -819,7 +849,9 @@
     <span class="footer-copy">© 2026 PlaidImmo — Barreau de Paris</span>
 </footer>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+
+<script>
 // Reveal au scroll
 document.addEventListener('DOMContentLoaded', () => {
     const obs = new IntersectionObserver((entries) => {
@@ -839,8 +871,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const GAP    = 32;
     const CARD_W = 340;
     const STEP   = CARD_W + GAP;
-    let idx = 0, timer;
-    const speed  = 3000;
+    let idx = 0, timer, paused = false;
+    const speed  = 5000;
 
     function goTo(n) {
         const visibleCards = Math.max(1, Math.floor(outer.offsetWidth / STEP));
@@ -856,8 +888,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function startAuto() {
         clearInterval(timer);
-        timer = setInterval(next, speed);
+        if (!paused) timer = setInterval(next, speed);
     }
+
+    // Pause au survol d'une carte
+    track.addEventListener('mouseenter', () => { paused = true; clearInterval(timer); });
+    track.addEventListener('mouseleave', () => { paused = false; startAuto(); });
 
     // Flèches
     btnPrev.addEventListener('click', () => { clearInterval(timer); prev(); startAuto(); });
