@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://sarahmelki-avocat.fr/sitemap.xml
