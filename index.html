@@ -368,13 +368,10 @@
             background: transparent;
             border: none;
             box-shadow: none;
-            cursor: pointer; color: rgba(29,29,31,0);
+            cursor: pointer; color: rgba(29,29,31,0.55);
             display: flex; align-items: center; justify-content: center;
             transition: color .3s, transform .3s;
             z-index: 10;
-            opacity: 0;
-        }
-        .carousel-wrapper:hover .carousel-arrow {
             opacity: 1;
         }
         #cprev { left: 0.6rem; }
@@ -575,7 +572,8 @@
             footer { flex-direction: column; text-align: center; padding: 2rem; }
             .expertises { padding: 5rem 0; }
             .carousel-track { padding: .5rem 1.5rem .5rem; }
-            .card { flex: 0 0 280px; }
+            .card { flex: 0 0 calc(100vw - 5rem); }
+            .card h3 { font-size: 1.15rem; }
             .hero { padding: 6rem 1.5rem 3rem; }
             .hero h1 { font-size: clamp(2.5rem, 8vw, 4rem); }
             .hero p { font-size: 1rem; }
@@ -666,7 +664,7 @@
                     <p>Vente bloquée, promesse non respectée, litige après achat : nous intervenons pour débloquer la situation ou obtenir réparation.</p>
                 </div>
                 <div class="card">
-                    <h3 style="white-space: nowrap;">Construction &amp; Malfaçons</h3>
+                    <h3>Construction &amp; Malfaçons</h3>
                     <p>Travaux mal réalisés, chantier abandonné, désordres après travaux : nous engageons la responsabilité des intervenants et obtenons réparation.</p>
                 </div>
                 <div class="card">
@@ -872,19 +870,24 @@ document.addEventListener('DOMContentLoaded', () => {
     const btnPrev = document.getElementById('cprev');
     const btnNext = document.getElementById('cnext');
     const TOTAL  = track.querySelectorAll('.card').length;
-    const GAP    = 32;
-    const CARD_W = 340;
-    const STEP   = CARD_W + GAP;
     let idx = 0, timer, paused = false;
     const speed  = 4000;
 
+    function getStep() {
+        const card = track.querySelector('.card');
+        if (!card) return 372;
+        const gap = parseInt(window.getComputedStyle(track).gap) || 32;
+        return card.offsetWidth + gap;
+    }
+
     function goTo(n) {
-        const visibleCards = Math.max(1, Math.floor(outer.offsetWidth / STEP));
+        const step = getStep();
+        const visibleCards = Math.max(1, Math.floor(outer.offsetWidth / step));
         const maxIdx = Math.max(0, TOTAL - visibleCards);
         if (n > maxIdx) { idx = 0; }
         else if (n < 0) { idx = maxIdx; }
         else { idx = n; }
-        track.style.transform = 'translateX(-' + (idx * STEP) + 'px)';
+        track.style.transform = 'translateX(-' + (idx * step) + 'px)';
     }
 
     function next() { goTo(idx + 1); }
